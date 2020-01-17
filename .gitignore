@@ -1,2 +1,12 @@
 
 *.exe
+*.inc
+*.o
+*.d
+*.mk
+Makefile
+*.xml
+*.bash
+*.c
+*.cpp
+*.properties
