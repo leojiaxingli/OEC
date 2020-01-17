@@ -35,11 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/joanna.o \
-	${OBJECTDIR}/josh.o \
-	${OBJECTDIR}/jung.o \
-	${OBJECTDIR}/leo.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/src/joanna.o \
+	${OBJECTDIR}/src/josh.o \
+	${OBJECTDIR}/src/jung.o \
+	${OBJECTDIR}/src/leo.o \
+	${OBJECTDIR}/src/main.o
 
 
 # C Compiler Flags
@@ -66,30 +66,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oec.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oec ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/joanna.o: joanna.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/joanna.o: src/joanna.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/joanna.o joanna.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/joanna.o src/joanna.cpp
 
-${OBJECTDIR}/josh.o: josh.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/josh.o: src/josh.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/josh.o josh.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/josh.o src/josh.cpp
 
-${OBJECTDIR}/jung.o: jung.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/jung.o: src/jung.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/jung.o jung.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/jung.o src/jung.cpp
 
-${OBJECTDIR}/leo.o: leo.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/leo.o: src/leo.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/leo.o leo.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/leo.o src/leo.cpp
 
-${OBJECTDIR}/main.o: main.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/main.o: src/main.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 # Subprojects
 .build-subprojects:
