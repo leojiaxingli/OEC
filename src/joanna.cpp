@@ -4,7 +4,6 @@
 #include <vector>
 using namespace std;
 
-double co2Grams (unordered_map<char, double> umap);
 unordered_map<char, double> carbon;  
     
 

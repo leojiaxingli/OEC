@@ -1,4 +1,5 @@
 #include "leo.h"
+#include "joanna.h"
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -6,6 +7,17 @@
 #include <string>
 #include <cstdlib>
 using namespace std;
+
+unordered_map<char,double> get_capacity(vector<string> row){
+    unordered_map<char,double> capacity = unordered_map<char,double>();
+    cout<<row.size()<<endl;
+    char key[] = {'S','N','W','H','C','G','B'};
+    for(int i=3;i<=9;i++){
+        float num = std::atof(row[i].c_str());
+        capacity[key[i-3]] = num;
+    }
+    return capacity;
+}
 void leo_main(int argc, char** argv){
     printf("This is Leo's Main\n");
     vector<vector<string> > rows = read_CSV("test.csv");
@@ -19,6 +31,9 @@ void leo_main(int argc, char** argv){
         cout<<endl;
     }
     write_CSV(rows,"out.csv");
+    cout<<rows.size()<<endl;
+    cout<<rows[0].size()<<endl;
+    cout<<co2Grams(get_capacity(rows[0]))<<endl;
 }
 void write_CSV(vector<vector<string> > rows, string file){
     ofstream outfile(file.c_str());
