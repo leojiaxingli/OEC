@@ -10,11 +10,25 @@ void josh_main(int argc, char** argv){
 // amounts contains the <key, value> pairs of all the 7 different types of energy
 // and the amount that each one supplied for a given hour
 double get_total_supplied(unordered_map <char, double> amounts) {
-    double total = 0; // IN MW
+    double total = 0; // In MW
     
     // Calculate total
     for (unordered_map <char, double>::iterator it = amounts.begin(); it != amounts.end(); ++it) {
         total = total + it->second;
+    }
+    return total;
+}
+
+// Calculates the total amount of green energy consumed
+// H = Hydro, W = Wind, S = Solar, G = Geothermal
+double get_total_green(unordered_map <char, double> amounts) {
+    double total = 0; // In MW
+    
+    // Calculate total for green (renewable) energy sources
+    for (unordered_map <char, double>::iterator it = amounts.begin(); it != amounts.end(); ++it) {
+        if (it->first == 'H' || it->first == 'W' || it->first == 'S' || it->first == 'G') {
+            total = total + it->second;
+        }
     }
     return total;
 }
