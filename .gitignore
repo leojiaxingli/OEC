@@ -19,3 +19,4 @@ src/oec/oec.project
 src/oec.project
 src/oec.txt
 OEC.workspace
+*.csv
