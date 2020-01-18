@@ -9,6 +9,8 @@ void josh_main(int, char**);
 double get_total_supplied(unordered_map <char, double> amounts);
 
 double get_selling_cost(double temperature, int time);
+double get_total_green(unordered_map <char, double> amounts);
+
 
 #endif /* JOSH_H */
 
