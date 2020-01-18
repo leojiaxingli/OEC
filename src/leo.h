@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+void analyze();
+std::vector<std::string> analyze_row(std::vector<std::string> row, double);
 std::unordered_map<char,double> get_capacity(std::vector<std::string> row);
 void leo_main(int, char**);
 std::vector<std::vector<std::string> > read_CSV(std::string);
