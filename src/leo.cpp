@@ -9,8 +9,8 @@
 #include <string>
 #include <cstdlib>
 using namespace std;
-void analyze(){
-    vector<vector<string> > rows = read_CSV("test.csv");
+void analyze(string file){
+    vector<vector<string> > rows = read_CSV(file.c_str());
     vector<vector<string> > out_rows = vector<vector<string> >();
     double last_nuclear = 0;
     
@@ -25,10 +25,16 @@ void analyze(){
             
             out_rows.push_back(result);
         }           
-        last_nuclear = std::atof(result[1].c_str());
-        cout<<"last nuclear: "<<last_nuclear<<endl;
+        last_nuclear = std::atof(result[4].c_str());
+//        cout<<"last nuclear: "<<last_nuclear<<endl;
     }
     write_CSV(out_rows,"out.csv");
+}
+string to_string_auto(double num){
+    std::ostringstream streamObj2;
+    //streamObj2 << std::fixed;
+    streamObj2 << num;
+    return streamObj2.str();
 }
 vector<string> analyze_row(vector<string> row, double last_nuclear){
     vector<string> result = vector<string>();
@@ -42,39 +48,41 @@ vector<string> analyze_row(vector<string> row, double last_nuclear){
     double supply = get_total_supplied(cap);
     
     double cut = supply - demand;
-    cout<<cap['N']<<endl;
-    if(cut > 0){
-        while((cut = (get_total_supplied(cap) - demand ))>0){
-            if(cut>cap[order[cut_order]]){
-                cap[order[cut_order]] = 0;
-                cut_order++;
-            }else{
-                cap[order[cut_order]]-=cut;
-            }
+//    cout<<"before: "<<supply<<endl;
+    while(cut>0){
+        if(cut>cap[order[cut_order]]){
+            cap[order[cut_order]] = 0;
+            cut_order++;
+        }else{
+            cap[order[cut_order]]-=cut;
         }
+        cut = get_total_supplied(cap) - demand;
     }
+    
+//    cout<<"after: "<<get_total_supplied(cap)<<endl;
 
     int counter =0;
     for (unordered_map <char, double>::iterator it = cap.begin(); it != cap.end(); ++it) {
-        cout<<it->first<<','<<it->second<<endl;
+//        cout<<it->first<<','<<it->second<<endl;
         counter ++;
     }
     
     result.push_back("2");
     result.push_back(row[1]);    
-    result.push_back(to_string(get_total_supplied(cap)));
+    result.push_back(to_string_auto(get_total_supplied(cap)));
     
     char out_order[] = {'S','N','W','H','C','G','B'};
     for(int i=0;i<counter;i++){
-        result.push_back(to_string(cap[out_order[i]]));
-        cout<<cap[out_order[i]]<<',';
-    }     
-    result.push_back("aaaa");
-    result.push_back(to_string(demand-get_total_supplied(cap)));
-    //green
+        result.push_back(to_string_auto(cap[out_order[i]]));
+//        cout<<cap[out_order[i]]<<',';
+    }
+    result.push_back(to_string_auto(demand-get_total_supplied(cap)));
+    result.push_back(to_string_auto(get_total_green(cap)));
+    result.push_back(to_string_auto(cap['B']));//bought
+    result.push_back(to_string_auto(0));//sold
     //bought
     //sold
-    result.push_back(to_string(co2Grams(cap)));
+    result.push_back(to_string_auto(co2Grams(cap)/1000000));
     istringstream iss(row[1]);
     string temp;
     
@@ -84,11 +92,12 @@ vector<string> analyze_row(vector<string> row, double last_nuclear){
         int num = atoi(temp.c_str());
         time+=num;
     }
-    cout<<"time: "<<time<<endl;
-    result.push_back(to_string(get_selling_cost(atof(row[10].c_str()),time)/1000));
-    result.push_back(to_string(total_cost(cap)));
-    //diff
-    result.push_back("-1");
+//    cout<<"time: "<<time<<endl;
+    result.push_back(to_string_auto(get_selling_cost(atof(row[10].c_str()),time)/1000));
+    result.push_back(to_string_auto(total_cost(cap)/1000/get_total_supplied(cap)));
+    result.push_back(to_string_auto(total_cost(cap)/1000/get_total_supplied(cap)-get_selling_cost(atof(row[10].c_str()),time)/1000));
+    result.push_back(to_string_auto(-1));
+    
     return result;
 }
 unordered_map<char,double> get_capacity(vector<string> row){
@@ -101,8 +110,11 @@ unordered_map<char,double> get_capacity(vector<string> row){
     return capacity;
 }
 void leo_main(int argc, char** argv){
-    printf("This is Leo's Main\n");
-    analyze();
+    if(argc!=2){
+        cout<<"Usage: oec.exe file.csv"<<endl;
+    }else{
+        analyze(argv[1]);
+    }
 }
 void write_CSV(vector<vector<string> > rows, string file){
     ofstream outfile(file.c_str());
@@ -139,6 +151,8 @@ vector<vector<string> > read_CSV(string file){
             split(row, row_split, ',');
             rows.push_back(row_split);
         }
+    }else{
+        cout<<"File "<<file<<" not found"<<endl;
     }
     return rows;
 }

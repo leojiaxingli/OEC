@@ -20,18 +20,18 @@ void joanna_main(int argc, char** argv){
 }
 
 double co2Grams(unordered_map<char, double> amounts) {
-    carbon['N'] = 6;
-    carbon['S'] = 105;
-    carbon['W'] = 13;
-    carbon['H'] = 4;
-    carbon['C'] = 909;
-    carbon['G'] = 58;
-    carbon['B'] = 258;
+    carbon['N'] = 6000;
+    carbon['S'] = 105000;
+    carbon['W'] = 13000;
+    carbon['H'] = 4000;
+    carbon['C'] = 909000;
+    carbon['G'] = 58000;
+    carbon['B'] = 258000;
     unordered_map<char, double>::iterator it;
     double totalGrams = 0;
-    for (it = carbon.begin(); it != carbon.end(); it++) {
+    for (it = amounts.begin(); it != amounts.end(); it++) {
         char energyType = it->first;
-        totalGrams += amounts[energyType];
+        totalGrams += it->second*carbon[energyType];
     }
     return totalGrams;
 }
